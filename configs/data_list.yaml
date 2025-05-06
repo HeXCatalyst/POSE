@@ -1,3 +1,13 @@
+split_pose:
+    data_path: ./dataset
+    known_classes: ['real']
+    
+    train_collection: split_pose_train
+    val_collection: split_pose_test
+    test_data_path: ./dataset/split_pose_test/annotations/test_list.txt
+    out_data_path: ./dataset/split_pose_test/annotations/test_list_out.txt
+    
+
 split1:
     data_path: ./dataset
     known_classes: ['real', 'celeba_ProGAN_seed0', 'celeba_StarGAN', 'FFHQ_StyleGAN3_r', 'FFHQ_StyleGAN3_t', 'SNGAN_imagenet', 'SAGAN_imagenet', 'lsun_ProGAN_seed0', 'lsun_MMDGAN', 'FaceSwap', 'FSGAN', 'stylegan_cat', 'stylegan3_cat', 'stylegan_bus', 'progan_bus']
