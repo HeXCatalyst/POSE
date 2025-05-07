@@ -1,12 +1,21 @@
 split_pose:
     data_path: ./dataset
     known_classes: ['real']
-    
+    unknown_classes1: []
+    unknown_classes2: []
+    unknown_classes3: []
     train_collection: split_pose_train
     val_collection: split_pose_test
     test_data_path: ./dataset/split_pose_test/annotations/test_list.txt
-    out_data_path: ./dataset/split_pose_test/annotations/test_list_out.txt
-    
+    out_data_path: ./dataset/split_pose_test/annotations/test_out_list.txt
+
+MM_class: # 这个是实验时的配置
+    data_path: ./dataset
+    known_classes: ['real', 'ProGAN', 'MMDGAN', 'ProGAN_1024', 'StyleGAN', 'VAE', 'BetaVAE', 'ADM', 'DDPM', 'SD15', 'SD21']
+    unknown_classes:  ['dalle_3', 'LDM', 'dalle-mini', 'test', 'gansformer', 'starGAN', 'TransGAN', 'glide', 'AttGAN', 'styleGAN3_r', 'Styleformer', 'styleGAN2', 'InfoVAE', 'styleGAN3_t', 'glow', 'DisBetaVAE', 'PNDM', 'dalle_2', 'midjourney_kaggle', 'SNGAN', 'ResFlow', 'StyleSwin']
+    train_data_path: train_list.txt
+    test_data_path: test_list.txt
+    out_data_path: test_out_list.txt
 
 split1:
     data_path: ./dataset
