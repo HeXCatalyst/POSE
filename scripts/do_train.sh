@@ -7,5 +7,5 @@ python3 main.py \
 --config_name $config_name \
 --device $device \
 --mode $mode \
---data split_pose
+--data MM_class
 
