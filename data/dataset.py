@@ -120,38 +120,38 @@ class BaseData(object):
         )
 
 
-        out_set1 = ImageDataset(read_annotations(out_data_path.replace('out','out_seed'),opt.debug), config, balance=False, test_mode=True)
-        out_loader1 = DataLoader(
-            dataset=out_set1,
-            num_workers=config.num_workers,
-            batch_size=config.batch_size,
-            pin_memory=True,
-            shuffle=True,
-            drop_last=False
-        )
+        # out_set1 = ImageDataset(read_annotations(out_data_path.replace('out','out_seed'),opt.debug), config, balance=False, test_mode=True)
+        # out_loader1 = DataLoader(
+        #     dataset=out_set1,
+        #     num_workers=config.num_workers,
+        #     batch_size=config.batch_size,
+        #     pin_memory=True,
+        #     shuffle=True,
+        #     drop_last=False
+        # )
 
-        out_set2 = ImageDataset(read_annotations(out_data_path.replace('out','out_arch'),opt.debug), config, balance=False, test_mode=True)
-        out_loader2 = DataLoader(
-            dataset=out_set2,
-            num_workers=config.num_workers,
-            batch_size=config.batch_size,
-            pin_memory=True,
-            shuffle=True,
-            drop_last=False
-        )
+        # out_set2 = ImageDataset(read_annotations(out_data_path.replace('out','out_arch'),opt.debug), config, balance=False, test_mode=True)
+        # out_loader2 = DataLoader(
+        #     dataset=out_set2,
+        #     num_workers=config.num_workers,
+        #     batch_size=config.batch_size,
+        #     pin_memory=True,
+        #     shuffle=True,
+        #     drop_last=False
+        # )
 
-        out_set3 = ImageDataset(read_annotations(out_data_path.replace('out','out_dataset'),opt.debug), config, balance=False, test_mode=True)
-        out_loader3 = DataLoader(
-            dataset=out_set3,
-            num_workers=config.num_workers,
-            batch_size=config.batch_size,
-            pin_memory=True,
-            shuffle=True,
-            drop_last=False
-        )
-        self.out_loader1 = out_loader1
-        self.out_loader2 = out_loader2
-        self.out_loader3 = out_loader3
+        # out_set3 = ImageDataset(read_annotations(out_data_path.replace('out','out_dataset'),opt.debug), config, balance=False, test_mode=True)
+        # out_loader3 = DataLoader(
+        #     dataset=out_set3,
+        #     num_workers=config.num_workers,
+        #     batch_size=config.batch_size,
+        #     pin_memory=True,
+        #     shuffle=True,
+        #     drop_last=False
+        # )
+        # self.out_loader1 = out_loader1
+        # self.out_loader2 = out_loader2
+        # self.out_loader3 = out_loader3
 
         self.train_loader = train_loader
         self.val_loader = val_loader

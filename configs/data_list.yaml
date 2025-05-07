@@ -13,6 +13,8 @@ MM_class: # 这个是实验时的配置
     data_path: ./dataset
     known_classes: ['real', 'ProGAN', 'MMDGAN', 'ProGAN_1024', 'StyleGAN', 'VAE', 'BetaVAE', 'ADM', 'DDPM', 'SD15', 'SD21']
     unknown_classes:  ['dalle_3', 'LDM', 'dalle-mini', 'test', 'gansformer', 'starGAN', 'TransGAN', 'glide', 'AttGAN', 'styleGAN3_r', 'Styleformer', 'styleGAN2', 'InfoVAE', 'styleGAN3_t', 'glow', 'DisBetaVAE', 'PNDM', 'dalle_2', 'midjourney_kaggle', 'SNGAN', 'ResFlow', 'StyleSwin']
+    train_collection: MM_class_train
+    val_collection: MM_class_val
     train_data_path: train_list.txt
     test_data_path: test_list.txt
     out_data_path: test_out_list.txt
