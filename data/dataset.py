@@ -65,8 +65,7 @@ class ImageDataset(Dataset):
 
 
 class BaseData(object):
-    def __init__(self, train_data_path, val_data_path, 
-                test_data_path, out_data_path, 
+    def __init__(self, train_data_path, test_data_path, out_data_path, 
                 opt, config):
 
         train_set = ImageDataset(read_annotations(train_data_path,opt.debug), config, balance=True)
@@ -79,16 +78,6 @@ class BaseData(object):
             drop_last=False,
         )
         
-        val_set = ImageDataset(read_annotations(val_data_path,opt.debug), config, balance=False, test_mode=True)
-        val_loader = DataLoader(
-            dataset=val_set,
-            num_workers=config.num_workers,
-            batch_size=config.batch_size,
-            pin_memory=True,
-            shuffle=True,
-            drop_last=False,
-        )
-
         tsne_set = ImageDataset(read_annotations(test_data_path,opt.debug), config, balance=True, test_mode=True)
         tsne_loader = DataLoader(
             dataset=tsne_set,
@@ -119,44 +108,9 @@ class BaseData(object):
             drop_last=False
         )
 
-
-        # out_set1 = ImageDataset(read_annotations(out_data_path.replace('out','out_seed'),opt.debug), config, balance=False, test_mode=True)
-        # out_loader1 = DataLoader(
-        #     dataset=out_set1,
-        #     num_workers=config.num_workers,
-        #     batch_size=config.batch_size,
-        #     pin_memory=True,
-        #     shuffle=True,
-        #     drop_last=False
-        # )
-
-        # out_set2 = ImageDataset(read_annotations(out_data_path.replace('out','out_arch'),opt.debug), config, balance=False, test_mode=True)
-        # out_loader2 = DataLoader(
-        #     dataset=out_set2,
-        #     num_workers=config.num_workers,
-        #     batch_size=config.batch_size,
-        #     pin_memory=True,
-        #     shuffle=True,
-        #     drop_last=False
-        # )
-
-        # out_set3 = ImageDataset(read_annotations(out_data_path.replace('out','out_dataset'),opt.debug), config, balance=False, test_mode=True)
-        # out_loader3 = DataLoader(
-        #     dataset=out_set3,
-        #     num_workers=config.num_workers,
-        #     batch_size=config.batch_size,
-        #     pin_memory=True,
-        #     shuffle=True,
-        #     drop_last=False
-        # )
-        # self.out_loader1 = out_loader1
-        # self.out_loader2 = out_loader2
-        # self.out_loader3 = out_loader3
-
         self.train_loader = train_loader
-        self.val_loader = val_loader
         self.test_loader = test_loader
         self.out_loader = out_loader
         self.tsne_loader = tsne_loader
 
-        print('train: {}, val: {}, test {}, out {}'.format(len(train_set),len(val_set),len(test_set),len(out_set)))
+        print('train: {}, test {}, out {}'.format(len(train_set), len(test_set),len(out_set)))

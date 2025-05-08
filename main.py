@@ -44,12 +44,11 @@ if __name__ == '__main__':
 
     # setup data path
     data_list = Config(config_filepath='./configs/data_list.yaml')[opt.data]
-    model_dir, train_data_path, val_data_path = get_train_paths(data_list, opt.config_name, run_dir)
-    test_data_path, out_data_path = data_list['test_data_path'], data_list['out_data_path']
+    model_dir = './result/'
+    train_data_path, test_data_path, out_data_path = data_list['train_data_path'], data_list['test_data_path'], data_list['out_data_path']
     config.known_classes = data_list['known_classes']
-    # config.unknown_classes1, config.unknown_classes2, config.unknown_classes3 = data_list['unknown_classes1'], data_list['unknown_classes2'], data_list['unknown_classes3']
-    # config.unknown_classes = config.unknown_classes1 + config.unknown_classes2 + config.unknown_classes3
     config.unknown_classes = data_list['unknown_classes']
+
     config.class_num = len(config.known_classes)  
     print('config.class_num', config.class_num)   
 
@@ -70,11 +69,10 @@ if __name__ == '__main__':
     logger.info('config_params: %s',config_params)
     
     # setup data
-    Data = BaseData(train_data_path, val_data_path, 
+    Data = BaseData(train_data_path, 
             test_data_path, out_data_path, 
             opt, config)
-    train_loader, val_loader, test_loader, out_loader = Data.train_loader, Data.val_loader, Data.test_loader, Data.out_loader
-    # out_loader1, out_loader2, out_loader3 = Data.out_loader1, Data.out_loader2, Data.out_loader3
+    train_loader, test_loader, out_loader = Data.train_loader, Data.test_loader, Data.out_loader
 
     # setup trainer
     Trainer = PGTrainer(Data, device, config, opt, writer, logger, model_dir)   
@@ -92,10 +90,6 @@ if __name__ == '__main__':
         else:
             logger.info('not defined mode')
 
-        # val-set evaluation
-        val_perf = Trainer.predict_set(val_loader, run_type='val')[-1]
-        logger.info('epoch %d -> metric %s, val: %.4f ' % (epoch, config.metric, val_perf))
-
         # closed-set and open-set evaluation
         if (epoch+1) % config.test_interval == 0: 
             logger.info('----------------------------  testing begin ----------------------------  ') 
@@ -104,13 +98,9 @@ if __name__ == '__main__':
             
             feature_known, _labels_k, _pred_k, test_perf = Trainer.predict_set(test_loader, run_type='closed-set')
             out_perf, oscr_perf = Trainer.test_out(epoch, feature_known, _labels_k, _pred_k, out_loader, config.unknown_classes, 'out')
-            # out_perf1, oscr_perf1 = Trainer.test_out(epoch, feature_known, _labels_k, _pred_k, out_loader1, config.unknown_classes1, 'out_seed')
-            # out_perf2, oscr_perf2 = Trainer.test_out(epoch, feature_known, _labels_k, _pred_k, out_loader2, config.unknown_classes2, 'out_arch')
-            # out_perf3, oscr_perf3 = Trainer.test_out(epoch, feature_known, _labels_k, _pred_k, out_loader3, config.unknown_classes3, 'out_data')
-            # logger.info('epoch %d -> metric %s, closed-set: %.2f, unseen seed: %.2f, %.2f, unseen arch: %.2f, %.2f, unseeen dataset: %.2f, %.2f, unseen all: %.2f, %.2f' % 
-                            # (epoch, config.metric, test_perf, out_perf1, oscr_perf1, out_perf2, oscr_perf2, out_perf3, oscr_perf3, out_perf, oscr_perf))
-            # logger.info('epoch %d -> metric %s, closed-set: %.2f, unseeen dataset: %.2f, %.2f, unseen all: %.2f, %.2f' % (epoch, config.metric, test_perf, out_perf, oscr_perf))
-            logger.info(f'epoch {epoch} -> metric {config.metric}, closed-set: {test_perf}, unseen all: {out_perf}, {oscr_perf}')
+
+            logger.info('epoch %d -> metric %s, closed-set: %.2f, unseen all: %.2f, %.2f' % 
+                            (epoch, config.metric, test_perf, out_perf, oscr_perf))
             logger.info('----------------------------  testing end ----------------------------  ') 
 
             if (epoch+1) % config.save_interval == 0: 
